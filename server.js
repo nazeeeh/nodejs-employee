@@ -1,10 +1,11 @@
-const mysql = require('mysql');
 const express = require('express');
+const mysql = require('mysql');
 const bodyParser = require('body-parser');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const myDbConnection = mysql.createConnection({
     host: 'localhost',
@@ -57,9 +58,9 @@ app.delete("/employees/:id", (req, res) => {
 //INSERT a new employee
 app.post("/employee", (req, res) => {
     // const {name, employee_code, salary} = ;
-    let name = req.body;
-    let employee_code = req.body;
-    let salary = req.body;
+    let name = req.body.name;
+    let employee_code = req.body.employee_code;
+    let salary = req.body.salary;
     const data = {name, employee_code, salary};
 
     myDbConnection.query("INSERT INTO employee SET ?", data, (err, rows, fields) => {
